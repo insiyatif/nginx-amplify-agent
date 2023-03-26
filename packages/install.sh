@@ -611,6 +611,7 @@ ${sudo_cmd} sh -c "sed -e 's|api_key.*$|api_key = $api_key|' \
                        -e 's|api_url.*$|api_url = $api_receiver_url|' \
                        -e 's|hostname.*$|hostname = $amplify_hostname|' \
                        -e 's|store_uuid.*$|store_uuid = $store_uuid|' \
+                       -e 's|uuid.*$|uuid = $uuid|' \
         ${agent_conf_file}.default > \
         ${agent_conf_file}" && \
 ${sudo_cmd} chmod 644 ${agent_conf_file} && \
@@ -779,6 +780,26 @@ if [ -f "${amplify_pid_file}" ]; then
         ${sudo_cmd} service amplify-agent stop > /dev/null 2>&1 < /dev/null
     fi
 fi
+
+if [ -n "${UUID}" ]; then
+    uuid=$UUID
+ else
+    printf "\033[31m UUID is not exist..\033[0m\n\n"
+ fi
+ 
+#    printf "\033[32m ${step}. Checking if uuid should be stored in the config ...\033[0m"
+
+#if [ -n "${STORE_UUID}" ]; then
+#    store_uuid=$STORE_UUID
+#fi
+
+#if [ "$uuid" != "True" ] && [ "$store_uuid" != "False" ]; then
+#    printf "\033[31m STORE_UUID needs to be True or False\033[0m\n\n"
+#    exit 1
+#else
+#    printf "\033[32m ${store_uuid}\033[0m\n"
+#fi
+    
 
 # Launch agent
 printf "\033[32m Launching amplify-agent ...\033[0m\n"
